@@ -4,12 +4,12 @@ import org.openqa.selenium.WebDriver;
 /**
  * Created by Подоляко on 13.06.2017.
  */
-public class SingInModalMenu extends AbstractPageObject {
+public class SignInModalMenu extends AbstractPageObject {
     private By loginBarLocator = By.xpath("(//input[@class = 'input-text auth-input-text'])[1]");
     private By passwordBarLocator = By.xpath("(//input[@class = 'input-text auth-input-text'])[2]");
     private By singInAcceptButtonLocator = By.xpath("//button[@name='auth_submit']");
 
-    public SingInModalMenu(WebDriver driver) {
+    public SignInModalMenu(WebDriver driver) {
         super(driver);
         waitTillPresent(singInAcceptButtonLocator);
     }

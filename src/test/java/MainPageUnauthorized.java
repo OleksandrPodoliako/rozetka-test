@@ -19,9 +19,9 @@ public class MainPageUnauthorized extends AbstractPageObject {
         return openSignInMenu().sendData(login, password);
     }
 
-    public SingInModalMenu openSignInMenu() {
+    public SignInModalMenu openSignInMenu() {
         getUserMenuElement().click();
-        return new SingInModalMenu(driver);
+        return new SignInModalMenu(driver);
     }
 
     public WebElement getUserMenuElement() {
