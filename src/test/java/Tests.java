@@ -22,7 +22,7 @@ public class Tests {
     private WebDriver driver;
     private MainPageAuthorized mainPageAuthorized;
     private String login = "emailForExample@ukr.net";
-    private String password = "ExampleR****";
+    private String password = "ExampleR2000";
     private String request = "samsung";
 
     @BeforeClass
@@ -109,13 +109,75 @@ public class Tests {
     }
 
     @Test
-    public void verifyAddToMyFishes() throws InterruptedException, IOException {
+    public void verifyAddToMyFishes() throws IOException {
         logger.info("verifyAddToMyFishes");
         mainPageAuthorized
                 .searchFor(request)
                 .getProductPage(2)
                 .addToWishList();
         Utility.doScreenshot(driver);
+    }
+
+    @Test
+    public void verifyProductName() {
+        logger.info("verifyProductName");
+        PhoneCatalogPage electPhonesPaga = mainPageAuthorized
+                .openPhoneCatalog()
+                .closeNotification()
+                .setPrice(1600, 2799)
+                .choseHTC();
+
+        String phoneNameElectPage = electPhonesPaga.getProductName(0);
+
+        ProductPage phonePage = electPhonesPaga.getPhone(0);
+
+        String phoneNameProductPage = phonePage.getProductName();
+
+        phoneNameElectPage = phoneNameElectPage.replace(" ", "");
+        phoneNameProductPage = phoneNameProductPage.replace(" ", "");
+
+        assertTrue(phoneNameElectPage.equals(phoneNameProductPage));
+    }
+
+    @Test
+    public void verifyProductPrice() {
+        logger.info("verifyProductPrice");
+        PhoneCatalogPage electPhonesPaga = mainPageAuthorized
+                .openPhoneCatalog()
+                .closeNotification()
+                .setPrice(1600, 2799)
+                .choseHTC();
+
+        String phonePriceElectPage = electPhonesPaga.getProductPrice(0);
+
+        ProductPage phonePage = electPhonesPaga.getPhone(0);
+
+        String phonePriceProductPage = phonePage.getProductPrice();
+
+        phonePriceElectPage = phonePriceElectPage.replace(" ", "");
+        phonePriceElectPage = phonePriceElectPage.replace(" ", "");
+        phonePriceElectPage = phonePriceElectPage.replace("грн", "");
+        phonePriceProductPage = phonePriceProductPage.replace(" ", "");
+
+        assertTrue(phonePriceElectPage.equals(phonePriceProductPage));
+    }
+
+    @Test
+    public void verifyProductRating() {
+        logger.info("verifyProductRating");
+        PhoneCatalogPage electPhonesPaga = mainPageAuthorized
+                .openPhoneCatalog()
+                .closeNotification()
+                .setPrice(1600, 2799)
+                .choseHTC();
+
+        String phoneRatingElectPage = electPhonesPaga.getProductRating(0);
+
+        ProductPage phonePage = electPhonesPaga.getPhone(0);
+
+        String phoneRatingProductPage = phonePage.getProductRating();
+
+        assertTrue(phoneRatingElectPage.equals(phoneRatingProductPage));
     }
 
     @AfterMethod

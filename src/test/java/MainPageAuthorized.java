@@ -10,6 +10,7 @@ public class MainPageAuthorized extends MainPageUnauthorized {
     private By searchBoxLocator = By.xpath("(//input[@type='text'])[1]");
     private By advertisingLocator = By.xpath("//a[@name ='close']");
     private By categoriesButtonLocator = By.xpath("(//li[@name='m-main-i'])[17]");
+    private By toPhoneCatalogButtonLocator = By.xpath("(//span[@class = 'popular-categories-i-img'])[2]");
 
     public MainPageAuthorized(WebDriver driver) {
         super(driver);
@@ -36,6 +37,11 @@ public class MainPageAuthorized extends MainPageUnauthorized {
     public CategoriesModalMenu openCategoriesMenu() {
         getCategoriesElement().click();
         return new CategoriesModalMenu(driver);
+    }
+
+    public PhoneCatalogPage openPhoneCatalog() {
+        getElement(toPhoneCatalogButtonLocator).click();
+        return new PhoneCatalogPage(driver);
     }
 
     public WebElement getCategoriesElement() {

@@ -9,6 +9,10 @@ public class ProductPage extends AbstractPageObject {
     private By imageLocator = By.xpath("//div[@class = 'responsive-img']");
     private By saveInWishListButtonLocator = By.xpath("//button[@class = 'btn-link-i']");
     private By imageInWishListLocator = By.xpath("//img[@class = 'g-img-icon']");
+    private By nameProductLabelLocator = By.xpath("//h1[@class = 'detail-title']");
+    private By priceLabelLocator = By.xpath("//span[@id = 'price_label']");
+    private By ratingLocator = By.xpath("//span[@class = 'g-rating-stars-i-medium']");
+
 
     public ProductPage(WebDriver driver) {
         super(driver);
@@ -19,5 +23,17 @@ public class ProductPage extends AbstractPageObject {
         getElement(addToWishButtonLocator).click();
         getElement(saveInWishListButtonLocator).click();
         waitTillPresent(imageInWishListLocator);
+    }
+
+    public String getProductName() {
+        return getElement(nameProductLabelLocator).getText();
+    }
+
+    public String getProductPrice() {
+        return getElement(priceLabelLocator).getText();
+    }
+
+    public String getProductRating() {
+        return getElement(ratingLocator).getAttribute("style");
     }
 }
