@@ -45,10 +45,10 @@ public class PhoneCatalogPage extends AbstractPageObject {
     }
 
 
-    public PhoneCatalogPage choseHTC() {
+    public PhoneCatalogPage choseCompany(String companyName) {
         getElement(moreCompanyLocator).click();
         for (WebElement choseCompanyButton : getElementList(companyCheckboxLocator)) {
-            if (choseCompanyButton.getText().equals("HTC")) {
+            if (choseCompanyButton.getText().equals(companyName)) {
                 choseCompanyButton.click();
                 break;
             }

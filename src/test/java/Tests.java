@@ -22,7 +22,7 @@ public class Tests {
     private WebDriver driver;
     private MainPageAuthorized mainPageAuthorized;
     private String login = "emailForExample@ukr.net";
-    private String password = "ExampleR2000";
+    private String password = "ExampleR****";
     private String request = "samsung";
 
     @BeforeClass
@@ -125,7 +125,7 @@ public class Tests {
                 .openPhoneCatalog()
                 .closeNotification()
                 .setPrice(1600, 2799)
-                .choseHTC();
+                .choseCompany("HTC");
 
         String phoneNameElectPage = electPhonesPaga.getProductName(0);
 
@@ -146,7 +146,7 @@ public class Tests {
                 .openPhoneCatalog()
                 .closeNotification()
                 .setPrice(1600, 2799)
-                .choseHTC();
+                .choseCompany("HTC");
 
         String phonePriceElectPage = electPhonesPaga.getProductPrice(0);
 
@@ -169,7 +169,7 @@ public class Tests {
                 .openPhoneCatalog()
                 .closeNotification()
                 .setPrice(1600, 2799)
-                .choseHTC();
+                .choseCompany("HTC");
 
         String phoneRatingElectPage = electPhonesPaga.getProductRating(0);
 
