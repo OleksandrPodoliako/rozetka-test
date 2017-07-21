@@ -1,14 +1,13 @@
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import static org.testng.Assert.assertFalse;
@@ -18,17 +17,11 @@ import static org.testng.Assert.assertTrue;
  * Created by Подоляко on 06.06.2017.
  */
 public class Tests {
-    private final static Logger logger = Logger.getLogger(Tests.class);
     private WebDriver driver;
     private MainPageAuthorized mainPageAuthorized;
     private String login = "emailForExample@ukr.net";
-    private String password = "ExampleR****";
+    private String password = "ExampleR1988";
     private String request = "samsung";
-
-    @BeforeClass
-    public void setUpLogger() {
-        PropertyConfigurator.configure("src/log4j.properties");
-    }
 
     @BeforeMethod
     public void setUp() {
@@ -38,7 +31,8 @@ public class Tests {
 
     @Test
     public void verifySignIn() {
-        logger.info("verifySignIn test start");
+        Date timeTestBegin = new Date();
+        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifySignIn test start ");
         String userMenuAttribute = mainPageAuthorized
                 .getUserMenuElement()
                 .getAttribute("name");
@@ -47,7 +41,8 @@ public class Tests {
 
     @Test
     public void verifySignOut() {
-        logger.info("verifySignOut test start");
+        Date timeTestBegin = new Date();
+        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifySignOut test start ");
         String userMenuAttribute = mainPageAuthorized
                 .openProfile()
                 .singOut()
@@ -60,20 +55,22 @@ public class Tests {
     //write in log SubCategories
     @Test
     public void loggingSubCategories() {
-        logger.info("loggingSubCategories test start");
+        Date timeTestBegin = new Date();
+        Reporter.log("[" + timeTestBegin.toString() + "]" + "loggingSubCategories test start ");
         List<WebElement> allCategoriesList = mainPageAuthorized
                 .openCategoriesMenu()
                 .getAllCategoriesList();
         for (WebElement element : allCategoriesList) {
             if (element.getCssValue("Color").equals("rgb(62, 119, 170)")) {
-                logger.info(element.getText());
+                Reporter.log(element.getText().toString());
             }
         }
     }
 
     @Test
     public void verifySearchButtonIsVisible() {
-        logger.info("verifySearchButtonIsVisible");
+        Date timeTestBegin = new Date();
+        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifySearchButtonIsVisible test start ");
         WebElement searchButton = mainPageAuthorized
                 .getSearchButton();
         assertTrue(searchButton.isDisplayed());
@@ -81,7 +78,8 @@ public class Tests {
 
     @Test
     public void verifySearchButtonIsInvisible() throws IOException {
-        logger.info("verifySearchButtonIsInvisible");
+        Date timeTestBegin = new Date();
+        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifySearchButtonIsInvisible test start ");
         WebElement searchButton = mainPageAuthorized
                 .getSearchButton();
         Utility.hideElement(driver, searchButton);
@@ -90,7 +88,8 @@ public class Tests {
 
     @Test
     public void verifyTextInResult() {
-        logger.info("verifyTextInResult");
+        Date timeTestBegin = new Date();
+        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyTextInResult test start ");
         String resultTitleText = mainPageAuthorized
                 .searchFor(request)
                 .getResultTitle()
@@ -100,7 +99,8 @@ public class Tests {
 
     @Test
     public void verifyColorTextInResult() {
-        logger.info("verifyColorTextInResult");
+        Date timeTestBegin = new Date();
+        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyColorTextInResult test start ");
         String resultTitleText = mainPageAuthorized
                 .searchFor(request)
                 .getResultTitle()
@@ -110,7 +110,8 @@ public class Tests {
 
     @Test
     public void verifyAddToMyFishes() throws IOException {
-        logger.info("verifyAddToMyFishes");
+        Date timeTestBegin = new Date();
+        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyAddToMyFishes test start ");
         mainPageAuthorized
                 .searchFor(request)
                 .getProductPage(2)
@@ -120,7 +121,8 @@ public class Tests {
 
     @Test
     public void verifyProductName() {
-        logger.info("verifyProductName");
+        Date timeTestBegin = new Date();
+        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyProductName test start ");
         PhoneCatalogPage electPhonesPaga = mainPageAuthorized
                 .openPhoneCatalog()
                 .closeNotification()
@@ -141,7 +143,8 @@ public class Tests {
 
     @Test
     public void verifyProductPrice() {
-        logger.info("verifyProductPrice");
+        Date timeTestBegin = new Date();
+        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyProductPrice test start ");
         PhoneCatalogPage electPhonesPaga = mainPageAuthorized
                 .openPhoneCatalog()
                 .closeNotification()
@@ -164,7 +167,8 @@ public class Tests {
 
     @Test
     public void verifyProductRating() {
-        logger.info("verifyProductRating");
+        Date timeTestBegin = new Date();
+        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyProductRating test start ");
         PhoneCatalogPage electPhonesPaga = mainPageAuthorized
                 .openPhoneCatalog()
                 .closeNotification()
