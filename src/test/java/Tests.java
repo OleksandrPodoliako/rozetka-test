@@ -20,7 +20,7 @@ public class Tests {
     private WebDriver driver;
     private MainPageAuthorized mainPageAuthorized;
     private String login = "emailForExample@ukr.net";
-    private String password = "ExampleR1988";
+    private String password = "ExampleR****";
     private String request = "samsung";
 
     @BeforeMethod
@@ -116,7 +116,7 @@ public class Tests {
                 .searchFor(request)
                 .getProductPage(2)
                 .addToWishList();
-        Utility.doScreenshot(driver);
+        Utility.addScreenshotToLog(driver);
     }
 
     @Test
