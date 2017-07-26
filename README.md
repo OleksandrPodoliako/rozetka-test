@@ -1,2 +1,2 @@
 # rozetka-test
-Task 1-5
+Task 1-6
