@@ -12,6 +12,7 @@ public class ProductPage extends AbstractPageObject {
     private By nameProductLabelLocator = By.xpath("//h1[@class = 'detail-title']");
     private By priceLabelLocator = By.xpath("//span[@id = 'price_label']");
     private By ratingLocator = By.xpath("//span[@class = 'g-rating-stars-i-medium']");
+    private By reviewsLocator = By.xpath("//a[@class = 'novisited g-rating-reviews-link-medium']");
 
 
     public ProductPage(WebDriver driver) {
@@ -35,5 +36,14 @@ public class ProductPage extends AbstractPageObject {
 
     public String getProductRating() {
         return getElement(ratingLocator).getAttribute("style");
+    }
+
+    public String getProductReviewsCount() {
+        return getElement(reviewsLocator).getText();
+    }
+
+    public ReviewsPage openReviews(){
+        getElement(reviewsLocator).click();
+        return new ReviewsPage(driver);
     }
 }

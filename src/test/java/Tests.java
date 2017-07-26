@@ -21,7 +21,8 @@ public class Tests {
     private MainPageAuthorized mainPageAuthorized;
     private String login = "emailForExample@ukr.net";
     private String password = "ExampleR****";
-    private String request = "samsung";
+    private String firstRequest = "samsung";
+    private String secondRequest = "IPAD 32GB";
 
     @BeforeMethod
     public void setUp() {
@@ -91,10 +92,10 @@ public class Tests {
         Date timeTestBegin = new Date();
         Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyTextInResult test start ");
         String resultTitleText = mainPageAuthorized
-                .searchFor(request)
+                .searchFor(firstRequest)
                 .getResultTitle()
                 .getText();
-        assertTrue(resultTitleText.contains(request));
+        assertTrue(resultTitleText.contains(firstRequest));
     }
 
     @Test
@@ -102,7 +103,7 @@ public class Tests {
         Date timeTestBegin = new Date();
         Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyColorTextInResult test start ");
         String resultTitleText = mainPageAuthorized
-                .searchFor(request)
+                .searchFor(firstRequest)
                 .getResultTitle()
                 .getCssValue("Color");
         assertTrue(resultTitleText.contains("rgb(0, 187, 51)"));
@@ -113,7 +114,7 @@ public class Tests {
         Date timeTestBegin = new Date();
         Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyAddToMyFishes test start ");
         mainPageAuthorized
-                .searchFor(request)
+                .searchFor(firstRequest)
                 .getProductPage(2)
                 .addToWishList();
         Utility.addScreenshotToLog(driver);
@@ -184,6 +185,50 @@ public class Tests {
         assertTrue(phoneRatingElectPage.equals(phoneRatingProductPage));
     }
 
+    @Test
+    public void verifyTitleContains32Gb() {
+        Date timeTestBegin = new Date();
+        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyTitleContains32Gb test start ");
+        String resultTitleText = mainPageAuthorized
+                .searchFor(secondRequest)
+                .getResultTitle()
+                .getText();
+        assertTrue(resultTitleText.contains("32GB"));
+    }
+
+    @Test
+    public void verifyProductReviews() {
+        Date timeTestBegin = new Date();
+        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyProductReviews test start ");
+
+        //number of reviews on Search Page
+        SearchResultPage ipadResultPage = mainPageAuthorized
+                .searchFor(secondRequest);
+        String numberOfReviewsTextSearchPage = ipadResultPage
+                .getProductReviewsCount(1);
+        int numberOfReviewsSearchPage = Utility.getNumbersFromText(numberOfReviewsTextSearchPage);
+
+        //number of reviews on Product Page
+        String numberOfReviewsTextProductPage = ipadResultPage
+                .getProductPage(1)
+                .getProductReviewsCount();
+        int numberOfReviewsProductPage = Utility.getNumbersFromText(numberOfReviewsTextProductPage);
+
+        assertTrue(numberOfReviewsSearchPage == numberOfReviewsProductPage);
+
+    }
+
+    @Test
+    public void verifyReviewsPageIsVisible(){
+        Date timeTestBegin = new Date();
+        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyReviewsPageIsVisible test start ");
+        WebElement reviewsMainPanel = mainPageAuthorized
+                .searchFor(secondRequest)
+                .getProductPage(1)
+                .openReviews()
+                .getReviewsMainPanel();
+        assertTrue(reviewsMainPanel.isDisplayed());
+    }
     @AfterMethod
     public void close() {
         driver.close();

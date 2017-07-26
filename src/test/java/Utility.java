@@ -23,4 +23,18 @@ public final class Utility {
     public static void changeColor(WebDriver driver, WebElement webElement) throws IOException {
         ((JavascriptExecutor) driver).executeScript("arguments[0].style.color='red'", webElement);
     }
+
+    public static int getNumbersFromText(String text) {
+        int numbers;
+        String textContainsOnlyNumbers = "";
+        char symbol;
+        for (int i = 0; i < text.length(); i++) {
+            symbol = text.charAt(i);
+            if (Character.isDigit(symbol)) {
+                textContainsOnlyNumbers = textContainsOnlyNumbers + symbol;
+            }
+        }
+        numbers = Integer.parseInt(textContainsOnlyNumbers);
+        return numbers;
+    }
 }
