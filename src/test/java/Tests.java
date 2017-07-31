@@ -7,7 +7,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 import static org.testng.Assert.assertFalse;
@@ -20,9 +19,9 @@ public class Tests {
     private WebDriver driver;
     private MainPageAuthorized mainPageAuthorized;
     private String login = "emailForExample@ukr.net";
-    private String password = "ExampleR****";
-    private String firstRequest = "samsung";
-    private String secondRequest = "IPAD 32GB";
+    private String password = "ExampleR2010";
+    private String searchQuery = "samsung";
+    private String otherSearchQuery = "IPAD 32GB";
 
     @BeforeMethod
     public void setUp() {
@@ -32,8 +31,6 @@ public class Tests {
 
     @Test
     public void verifySignIn() {
-        Date timeTestBegin = new Date();
-        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifySignIn test start ");
         String userMenuAttribute = mainPageAuthorized
                 .getUserMenuElement()
                 .getAttribute("name");
@@ -42,8 +39,6 @@ public class Tests {
 
     @Test
     public void verifySignOut() {
-        Date timeTestBegin = new Date();
-        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifySignOut test start ");
         String userMenuAttribute = mainPageAuthorized
                 .openProfile()
                 .singOut()
@@ -52,26 +47,23 @@ public class Tests {
         assertTrue(userMenuAttribute.equals("signin"));
     }
 
-
-    //write in log SubCategories
     @Test
     public void loggingSubCategories() {
-        Date timeTestBegin = new Date();
-        Reporter.log("[" + timeTestBegin.toString() + "]" + "loggingSubCategories test start ");
+        int numberOfSubCategories = 0;
         List<WebElement> allCategoriesList = mainPageAuthorized
                 .openCategoriesMenu()
                 .getAllCategoriesList();
         for (WebElement element : allCategoriesList) {
             if (element.getCssValue("Color").equals("rgb(62, 119, 170)")) {
-                Reporter.log(element.getText().toString());
+                Reporter.log(element.getText().toString() + "<br>");
+                numberOfSubCategories++;
             }
         }
+        assertTrue(numberOfSubCategories > 0);
     }
 
     @Test
     public void verifySearchButtonIsVisible() {
-        Date timeTestBegin = new Date();
-        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifySearchButtonIsVisible test start ");
         WebElement searchButton = mainPageAuthorized
                 .getSearchButton();
         assertTrue(searchButton.isDisplayed());
@@ -79,8 +71,6 @@ public class Tests {
 
     @Test
     public void verifySearchButtonIsInvisible() throws IOException {
-        Date timeTestBegin = new Date();
-        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifySearchButtonIsInvisible test start ");
         WebElement searchButton = mainPageAuthorized
                 .getSearchButton();
         Utility.hideElement(driver, searchButton);
@@ -89,21 +79,17 @@ public class Tests {
 
     @Test
     public void verifyTextInResult() {
-        Date timeTestBegin = new Date();
-        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyTextInResult test start ");
         String resultTitleText = mainPageAuthorized
-                .searchFor(firstRequest)
+                .searchFor(searchQuery)
                 .getResultTitle()
                 .getText();
-        assertTrue(resultTitleText.contains(firstRequest));
+        assertTrue(resultTitleText.contains(searchQuery));
     }
 
     @Test
     public void verifyColorTextInResult() {
-        Date timeTestBegin = new Date();
-        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyColorTextInResult test start ");
         String resultTitleText = mainPageAuthorized
-                .searchFor(firstRequest)
+                .searchFor(searchQuery)
                 .getResultTitle()
                 .getCssValue("Color");
         assertTrue(resultTitleText.contains("rgb(0, 187, 51)"));
@@ -111,86 +97,78 @@ public class Tests {
 
     @Test
     public void verifyAddToMyFishes() throws IOException {
-        Date timeTestBegin = new Date();
-        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyAddToMyFishes test start ");
-        mainPageAuthorized
-                .searchFor(firstRequest)
-                .getProductPage(2)
-                .addToWishList();
+        WebElement inWishDialogDox = mainPageAuthorized
+                .searchFor(searchQuery)
+                .openProductPage(2)
+                .addToWishList()
+                .getDialogBox();
         Utility.addScreenshotToLog(driver);
+        assertTrue(inWishDialogDox.isDisplayed());
     }
 
     @Test
     public void verifyProductName() {
-        Date timeTestBegin = new Date();
-        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyProductName test start ");
-        PhoneCatalogPage electPhonesPaga = mainPageAuthorized
+        PhoneCatalogPage phoneCatalogPaga = mainPageAuthorized
                 .openPhoneCatalog()
                 .closeNotification()
                 .setPrice(1600, 2799)
                 .choseCompany("HTC");
 
-        String phoneNameElectPage = electPhonesPaga.getProductName(0);
+        String phoneName = phoneCatalogPaga.getProductName(0);
 
-        ProductPage phonePage = electPhonesPaga.getPhone(0);
+        ProductPage phonePage = phoneCatalogPaga.getPhone(0);
 
-        String phoneNameProductPage = phonePage.getProductName();
+        String otherPhoneName = phonePage.getProductName();
 
-        phoneNameElectPage = phoneNameElectPage.replace(" ", "");
-        phoneNameProductPage = phoneNameProductPage.replace(" ", "");
+        phoneName = phoneName.replace(" ", "");
+        otherPhoneName = otherPhoneName.replace(" ", "");
 
-        assertTrue(phoneNameElectPage.equals(phoneNameProductPage));
+        assertTrue(phoneName.equals(otherPhoneName));
     }
 
     @Test
     public void verifyProductPrice() {
-        Date timeTestBegin = new Date();
-        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyProductPrice test start ");
-        PhoneCatalogPage electPhonesPaga = mainPageAuthorized
+        PhoneCatalogPage phoneCatalogPaga = mainPageAuthorized
                 .openPhoneCatalog()
                 .closeNotification()
                 .setPrice(1600, 2799)
                 .choseCompany("HTC");
 
-        String phonePriceElectPage = electPhonesPaga.getProductPrice(0);
+        String phonePrice = phoneCatalogPaga.getProductPrice(0);
 
-        ProductPage phonePage = electPhonesPaga.getPhone(0);
+        ProductPage phonePage = phoneCatalogPaga.getPhone(0);
 
-        String phonePriceProductPage = phonePage.getProductPrice();
+        String otherPhonePrice = phonePage.getProductPrice();
 
-        phonePriceElectPage = phonePriceElectPage.replace(" ", "");
-        phonePriceElectPage = phonePriceElectPage.replace(" ", "");
-        phonePriceElectPage = phonePriceElectPage.replace("грн", "");
-        phonePriceProductPage = phonePriceProductPage.replace(" ", "");
+        phonePrice = phonePrice.replace(" ", "");
+        phonePrice = phonePrice.replace(" ", "");
+        phonePrice = phonePrice.replace("грн", "");
+        otherPhonePrice = otherPhonePrice.replace(" ", "");
 
-        assertTrue(phonePriceElectPage.equals(phonePriceProductPage));
+        assertTrue(phonePrice.equals(otherPhonePrice));
     }
 
     @Test
     public void verifyProductRating() {
-        Date timeTestBegin = new Date();
-        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyProductRating test start ");
-        PhoneCatalogPage electPhonesPaga = mainPageAuthorized
+        PhoneCatalogPage phoneCatalogPaga = mainPageAuthorized
                 .openPhoneCatalog()
                 .closeNotification()
                 .setPrice(1600, 2799)
                 .choseCompany("HTC");
 
-        String phoneRatingElectPage = electPhonesPaga.getProductRating(0);
+        String phoneRating = phoneCatalogPaga.getProductRating(0);
 
-        ProductPage phonePage = electPhonesPaga.getPhone(0);
+        ProductPage phonePage = phoneCatalogPaga.getPhone(0);
 
-        String phoneRatingProductPage = phonePage.getProductRating();
+        String otherPhoneRating = phonePage.getProductRating();
 
-        assertTrue(phoneRatingElectPage.equals(phoneRatingProductPage));
+        assertTrue(phoneRating.equals(otherPhoneRating));
     }
 
     @Test
     public void verifyTitleContains32Gb() {
-        Date timeTestBegin = new Date();
-        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyTitleContains32Gb test start ");
         String resultTitleText = mainPageAuthorized
-                .searchFor(secondRequest)
+                .searchFor(otherSearchQuery)
                 .getResultTitle()
                 .getText();
         assertTrue(resultTitleText.contains("32GB"));
@@ -198,37 +176,32 @@ public class Tests {
 
     @Test
     public void verifyProductReviews() {
-        Date timeTestBegin = new Date();
-        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyProductReviews test start ");
-
         //number of reviews on Search Page
         SearchResultPage ipadResultPage = mainPageAuthorized
-                .searchFor(secondRequest);
-        String numberOfReviewsTextSearchPage = ipadResultPage
+                .searchFor(otherSearchQuery);
+        String numberOfReviewsText = ipadResultPage
                 .getProductReviewsCount(1);
-        int numberOfReviewsSearchPage = Utility.getNumbersFromText(numberOfReviewsTextSearchPage);
+        int numberOfReviews = Utility.getNumbersFromText(numberOfReviewsText);
 
         //number of reviews on Product Page
-        String numberOfReviewsTextProductPage = ipadResultPage
-                .getProductPage(1)
+        String otherNumberOfReviewsText = ipadResultPage
+                .openProductPage(1)
                 .getProductReviewsCount();
-        int numberOfReviewsProductPage = Utility.getNumbersFromText(numberOfReviewsTextProductPage);
-
-        assertTrue(numberOfReviewsSearchPage == numberOfReviewsProductPage);
+        int otherNumberOfReviews = Utility.getNumbersFromText(otherNumberOfReviewsText);
+        assertTrue(numberOfReviews == otherNumberOfReviews);
 
     }
 
     @Test
-    public void verifyReviewsPageIsVisible(){
-        Date timeTestBegin = new Date();
-        Reporter.log("[" + timeTestBegin.toString() + "]" + "verifyReviewsPageIsVisible test start ");
+    public void verifyReviewsPageIsVisible() {
         WebElement reviewsMainPanel = mainPageAuthorized
-                .searchFor(secondRequest)
-                .getProductPage(1)
+                .searchFor(otherSearchQuery)
+                .openProductPage(1)
                 .openReviews()
                 .getReviewsMainPanel();
         assertTrue(reviewsMainPanel.isDisplayed());
     }
+
     @AfterMethod
     public void close() {
         driver.close();

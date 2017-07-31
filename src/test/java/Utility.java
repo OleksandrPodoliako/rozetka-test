@@ -4,6 +4,8 @@ import org.testng.Reporter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Подоляко on 06.06.2017.
@@ -26,15 +28,14 @@ public final class Utility {
 
     public static int getNumbersFromText(String text) {
         int numbers;
-        String textContainsOnlyNumbers = "";
-        char symbol;
-        for (int i = 0; i < text.length(); i++) {
-            symbol = text.charAt(i);
-            if (Character.isDigit(symbol)) {
-                textContainsOnlyNumbers = textContainsOnlyNumbers + symbol;
-            }
+        StringBuilder onlyNumbers = new StringBuilder();
+        Pattern pattern = Pattern.compile("[0-9]");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            onlyNumbers.append(matcher.group());
         }
-        numbers = Integer.parseInt(textContainsOnlyNumbers);
+        text = onlyNumbers.toString();
+        numbers = Integer.parseInt(text);
         return numbers;
     }
 }

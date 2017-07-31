@@ -1,6 +1,7 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Reporter;
 
 /**
  * Created by Подоляко on 02.07.2017.
@@ -22,7 +23,8 @@ public class SearchResultPage extends AbstractPageObject {
         return getElement(resultTitleLocator);
     }
 
-    public ProductPage getProductPage(int number) {
+    public ProductPage openProductPage(int number) {
+        Reporter.log("openProductPage <br>");
         getElementList(resultLocator).get(number).click();
         return new ProductPage(driver);
     }

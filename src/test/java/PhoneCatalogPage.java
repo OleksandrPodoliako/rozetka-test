@@ -2,6 +2,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Reporter;
 
 /**
  * Created by Подоляко on 17.07.2017.
@@ -26,6 +27,7 @@ public class PhoneCatalogPage extends SearchResultPage {
     }
 
     public PhoneCatalogPage setPrice(Integer min, Integer max) {
+        Reporter.log("setPrice <br>");
         getElement(priceMinBoxLocator).sendKeys(min.toString());
         getElement(priceMaxBoxLocator).sendKeys(Keys.CONTROL + "a");
         getElement(priceMaxBoxLocator).sendKeys(Keys.DELETE);
@@ -36,12 +38,14 @@ public class PhoneCatalogPage extends SearchResultPage {
     }
 
     public PhoneCatalogPage closeNotification() {
+        Reporter.log("closeNotification <br>");
         getElement(refuseNotificationLocator).click();
         return new PhoneCatalogPage(driver);
     }
 
 
     public PhoneCatalogPage choseCompany(String companyName) {
+        Reporter.log("choseCompany <br>");
         getElement(moreCompanyLocator).click();
         for (WebElement choseCompanyButton : getElementList(companyCheckboxLocator)) {
             if (choseCompanyButton.getText().equals(companyName)) {

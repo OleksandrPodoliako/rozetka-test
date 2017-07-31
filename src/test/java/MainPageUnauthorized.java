@@ -1,6 +1,7 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Reporter;
 
 /**
  * Created by Подоляко on 06.06.2017.
@@ -16,6 +17,7 @@ public class MainPageUnauthorized extends AbstractPageObject {
     }
 
     public MainPageAuthorized signIn(String login, String password) {
+        Reporter.log("signIn <br>");
         return openSignInMenu().sendData(login, password);
     }
 
