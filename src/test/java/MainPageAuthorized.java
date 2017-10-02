@@ -40,13 +40,13 @@ class MainPageAuthorized extends MainPageUnauthorized {
         return new SearchResultPage(driver);
     }
 
-    SearchResultPage searchFor(String searchQuery,String Category) {
+    SearchResultPage searchFor(String searchQuery,String category) {
         getElement(searchBoxLocator).sendKeys(searchQuery);
         getElement(advertisingLocator).click();
         getElement(categoryComboBoxLocator).click();
         List<WebElement> categoryList =  getElementList(categoryFromComboBoxLocator);
         for (WebElement categoryButton:categoryList){
-            if (categoryButton.getText().contains(Category)){
+            if (categoryButton.getText().contains(category)){
                 categoryButton.click();
             }
         }
