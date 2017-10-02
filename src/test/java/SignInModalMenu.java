@@ -9,12 +9,12 @@ public class SignInModalMenu extends AbstractPageObject {
     private By passwordBarLocator = By.xpath("(//input[@class = 'input-text auth-input-text'])[2]");
     private By singInAcceptButtonLocator = By.xpath("//button[@name='auth_submit']");
 
-    public SignInModalMenu(WebDriver driver) {
+    SignInModalMenu(WebDriver driver) {
         super(driver);
         waitTillPresent(singInAcceptButtonLocator);
     }
 
-    public MainPageAuthorized sendData(String login, String password) {
+    MainPageAuthorized sendData(String login, String password) {
         getElement(loginBarLocator).sendKeys(login);
         getElement(passwordBarLocator).sendKeys(password);
         getElement(singInAcceptButtonLocator).click();

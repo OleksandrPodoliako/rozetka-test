@@ -5,7 +5,7 @@ import org.testng.Reporter;
 /**
  * Created by Подоляко on 03.07.2017.
  */
-public class ProductPage extends AbstractPageObject {
+class ProductPage extends AbstractPageObject {
     private By addToWishButtonLocator = By.xpath("//a[@name = 'towishlist']");
     private By imageLocator = By.xpath("//div[@class = 'responsive-img']");
     private By saveInWishListButtonLocator = By.xpath("//button[@class = 'btn-link-i']");
@@ -15,35 +15,35 @@ public class ProductPage extends AbstractPageObject {
     private By reviewsLocator = By.xpath("//a[@class = 'novisited g-rating-reviews-link-medium']");
 
 
-    public ProductPage(WebDriver driver) {
+    ProductPage(WebDriver driver) {
         super(driver);
         waitTillPresent(imageLocator);
     }
 
-    public AddInWishDialogBox addToWishList() {
+    AddInWishDialogBox addToWishList() {
         Reporter.log("addToWishList <br>");
         getElement(addToWishButtonLocator).click();
         getElement(saveInWishListButtonLocator).click();
         return new AddInWishDialogBox(driver);
     }
 
-    public String getProductName() {
+    String getProductName() {
         return getElement(nameProductLabelLocator).getText();
     }
 
-    public String getProductPrice() {
+    String getProductPrice() {
         return getElement(priceLabelLocator).getText();
     }
 
-    public String getProductRating() {
+    String getProductRating() {
         return getElement(ratingLocator).getAttribute("style");
     }
 
-    public String getProductReviewsCount() {
+    String getProductReviewsCount() {
         return getElement(reviewsLocator).getText();
     }
 
-    public ReviewsPage openReviews() {
+    ReviewsPage openReviews() {
         Reporter.log("openReviews <br>");
         getElement(reviewsLocator).click();
         return new ReviewsPage(driver);

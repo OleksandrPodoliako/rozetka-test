@@ -11,9 +11,9 @@ import java.util.List;
  */
 public abstract class AbstractPageObject {
     protected WebDriver driver;
-    protected WebDriverWait driverWait;
+    private WebDriverWait driverWait;
 
-    public AbstractPageObject(WebDriver driver) {
+    AbstractPageObject(WebDriver driver) {
         this.driver = driver;
         this.driverWait = new WebDriverWait(driver, 10);
     }
@@ -23,7 +23,7 @@ public abstract class AbstractPageObject {
                 .until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
-    public void waitTillDisappear(By locator) {
+    void waitTillDisappear(By locator) {
         driverWait
                 .until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
@@ -33,7 +33,7 @@ public abstract class AbstractPageObject {
                 .until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
-    public List<WebElement> getElementList(By locator) {
+    List<WebElement> getElementList(By locator) {
         return driverWait
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }

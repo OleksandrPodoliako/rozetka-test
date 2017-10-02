@@ -5,15 +5,15 @@ import org.openqa.selenium.WebElement;
 /**
  * Created by Подоляко on 28.07.2017.
  */
-public class AddInWishDialogBox extends AbstractPageObject {
+class AddInWishDialogBox extends AbstractPageObject {
     private By allBoxLocator = By.xpath("//div[@class = 'popup-css popup-wishlists']");
 
-    public AddInWishDialogBox(WebDriver driver) {
+    AddInWishDialogBox(WebDriver driver) {
         super(driver);
         waitTillPresent(allBoxLocator);
     }
 
-    public WebElement getDialogBox() {
+    WebElement getDialogBox() {
         return getElement(allBoxLocator);
     }
 }

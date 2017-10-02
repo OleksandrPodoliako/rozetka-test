@@ -7,7 +7,7 @@ import org.testng.Reporter;
 /**
  * Created by Подоляко on 17.07.2017.
  */
-public class PhoneCatalogPage extends SearchResultPage {
+class PhoneCatalogPage extends SearchResultPage {
     private By priceMinBoxLocator = By.xpath("//input[@id='price[min]']");
     private By priceMaxBoxLocator = By.xpath("//input[@id='price[max]']");
     private By submitPriceLocator = By.xpath("//button[@id = 'submitprice']");
@@ -21,12 +21,12 @@ public class PhoneCatalogPage extends SearchResultPage {
     private By refuseNotificationLocator = By.xpath("//div[@class = 'notificationPanelBlock']");
 
 
-    public PhoneCatalogPage(WebDriver driver) {
+    PhoneCatalogPage(WebDriver driver) {
         super(driver);
         waitTillPresent(searchResultLocator);
     }
 
-    public PhoneCatalogPage setPrice(Integer min, Integer max) {
+    PhoneCatalogPage setPrice(Integer min, Integer max) {
         Reporter.log("setPrice <br>");
         getElement(priceMinBoxLocator).sendKeys(min.toString());
         getElement(priceMaxBoxLocator).sendKeys(Keys.CONTROL + "a");
@@ -37,14 +37,14 @@ public class PhoneCatalogPage extends SearchResultPage {
         return new PhoneCatalogPage(driver);
     }
 
-    public PhoneCatalogPage closeNotification() {
+    PhoneCatalogPage closeNotification() {
         Reporter.log("closeNotification <br>");
         getElement(refuseNotificationLocator).click();
         return new PhoneCatalogPage(driver);
     }
 
 
-    public PhoneCatalogPage choseCompany(String companyName) {
+    PhoneCatalogPage choseCompany(String companyName) {
         Reporter.log("choseCompany <br>");
         getElement(moreCompanyLocator).click();
         for (WebElement choseCompanyButton : getElementList(companyCheckboxLocator)) {
@@ -57,7 +57,7 @@ public class PhoneCatalogPage extends SearchResultPage {
         return new PhoneCatalogPage(driver);
     }
 
-    public ProductPage getPhone(int number) {
+    ProductPage getPhone(int number) {
         getElementList(phoneLocator).get(number).click();
         return new ProductPage(driver);
     }

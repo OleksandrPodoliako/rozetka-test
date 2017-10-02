@@ -21,7 +21,10 @@ public class Tests {
     private String login = "emailForExample@ukr.net";
     private String password = "ExampleR2010";
     private String searchQuery = "samsung";
-    private String otherSearchQuery = "IPAD 32GB";
+    private String secondSearchQuery = "IPAD 32GB";
+    private String thirdSearchQuery = "Nokia";
+    private String category= "Телефоны, MP3, GPS";
+
 
     @BeforeMethod
     public void setUp() {
@@ -168,7 +171,7 @@ public class Tests {
     @Test
     public void verifyTitleContains32Gb() {
         String resultTitleText = mainPageAuthorized
-                .searchFor(otherSearchQuery)
+                .searchFor(secondSearchQuery)
                 .getResultTitle()
                 .getText();
         assertTrue(resultTitleText.contains("32GB"));
@@ -178,7 +181,7 @@ public class Tests {
     public void verifyProductReviews() {
         //number of reviews on Search Page
         SearchResultPage ipadResultPage = mainPageAuthorized
-                .searchFor(otherSearchQuery);
+                .searchFor(secondSearchQuery);
         String numberOfReviewsText = ipadResultPage
                 .getProductReviewsCount(1);
         int numberOfReviews = Utility.getNumbersFromText(numberOfReviewsText);
@@ -195,11 +198,28 @@ public class Tests {
     @Test
     public void verifyReviewsPageIsVisible() {
         WebElement reviewsMainPanel = mainPageAuthorized
-                .searchFor(otherSearchQuery)
+                .searchFor(secondSearchQuery)
                 .openProductPage(1)
                 .openReviews()
                 .getReviewsMainPanel();
         assertTrue(reviewsMainPanel.isDisplayed());
+    }
+
+    @Test
+    public void verifyFilterLabelVisible(){
+        WebElement filterLabel = mainPageAuthorized
+                .searchFor(thirdSearchQuery,category)
+                .getFilterLabel();
+        assertTrue(filterLabel.isDisplayed());
+    }
+
+    @Test
+    public void verifyResultContainsQuery(){
+    boolean resultContainsQuery =
+            mainPageAuthorized
+                    .searchFor(thirdSearchQuery,category)
+                    .resultContainsQuery(thirdSearchQuery);
+        assertTrue(resultContainsQuery);
     }
 
     @AfterMethod

@@ -7,15 +7,15 @@ import java.util.List;
 /**
  * Created by Подоляко on 26.06.2017.
  */
-public class CategoriesModalMenu extends AbstractPageObject {
+class CategoriesModalMenu extends AbstractPageObject {
     private By allCategoriesLocator = By.xpath("//div[@class = 'all-cat-b-content']//a");
 
-    public CategoriesModalMenu(WebDriver driver) {
+    CategoriesModalMenu(WebDriver driver) {
         super(driver);
         waitTillPresent(allCategoriesLocator);
     }
 
-    public List<WebElement> getAllCategoriesList() {
+    List<WebElement> getAllCategoriesList() {
         return getElementList(allCategoriesLocator);
     }
 }

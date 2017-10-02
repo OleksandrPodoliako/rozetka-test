@@ -11,12 +11,12 @@ public class ReviewsPage extends AbstractPageObject {
     private By reviewsLocator = By.xpath(".pp-review-inner");
     private By reviewsMainPanelLocator = By.cssSelector("#reviews_container_parent");
 
-    public ReviewsPage(WebDriver driver) {
+    ReviewsPage(WebDriver driver) {
         super(driver);
         waitTillPresent(reviewsMainPanelLocator);
     }
 
-    public WebElement getReviewsMainPanel() {
+    WebElement getReviewsMainPanel() {
         return getElement(reviewsMainPanelLocator);
     }
 

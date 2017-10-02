@@ -6,27 +6,27 @@ import org.testng.Reporter;
 /**
  * Created by Подоляко on 06.06.2017.
  */
-public class MainPageUnauthorized extends AbstractPageObject {
-    protected By userMenuLocator = By.xpath("//span[@name='splash-button']/a");
+class MainPageUnauthorized extends AbstractPageObject {
+    By userMenuLocator = By.xpath("//span[@name='splash-button']/a");
 
 
-    public MainPageUnauthorized(WebDriver driver) {
+    MainPageUnauthorized(WebDriver driver) {
         super(driver);
         driver.get("https://www.rozetka.com.ua/");
         waitTillPresent(userMenuLocator);
     }
 
-    public MainPageAuthorized signIn(String login, String password) {
+    MainPageAuthorized signIn(String login, String password) {
         Reporter.log("signIn <br>");
         return openSignInMenu().sendData(login, password);
     }
 
-    public SignInModalMenu openSignInMenu() {
+    SignInModalMenu openSignInMenu() {
         getUserMenuElement().click();
         return new SignInModalMenu(driver);
     }
 
-    public WebElement getUserMenuElement() {
+    WebElement getUserMenuElement() {
         return getElement(userMenuLocator);
     }
 
